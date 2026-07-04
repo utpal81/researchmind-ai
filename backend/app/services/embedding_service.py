@@ -7,14 +7,10 @@ class EmbeddingService:
 
     def __init__(self):
 
-        self.model = SentenceTransformer(
-            EMBEDDING_MODEL
-        )
+        self.model = SentenceTransformer( EMBEDDING_MODEL)
 
-    def embed(
-        self,
-        chunks: list[Chunk]
-    ) -> list[EmbeddedChunk]:
+    # embedding for the chunks
+    def embed( self, chunks: list[Chunk]) -> list[EmbeddedChunk]:
 
         embedded_chunks = []
 
@@ -32,5 +28,21 @@ class EmbeddingService:
             )    
 
         return embedded_chunks
+    
+    
+    # embedding for the query
+    def embed_query(self, query: str) -> list[float]:
+
+        vector = self.model.encode(query)
+
+        return vector.tolist()
+    
+    
+    # serach for top k realated embedding chunks for the query
+    def search( self, query_embedding: list[float], top_k: int = 5 ):
+
+        results = self.collection.query( query_embeddings=[query_embedding],  n_results=top_k)
+
+        return results
     
 embedding_service = EmbeddingService()
