@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from app.core.config import EMBEDDING_MODEL
+from app.core.config import settings
 from app.schemas.chunk import Chunk
 from app.schemas.embedding import EmbeddedChunk
 
@@ -7,7 +7,7 @@ class EmbeddingService:
 
     def __init__(self):
 
-        self.model = SentenceTransformer( EMBEDDING_MODEL)
+        self.model = SentenceTransformer( settings.EMBEDDING_MODEL)
 
     # embedding for the chunks
     def embed( self, chunks: list[Chunk]) -> list[EmbeddedChunk]:

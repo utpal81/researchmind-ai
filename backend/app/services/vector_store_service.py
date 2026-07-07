@@ -1,10 +1,7 @@
 import chromadb
 from app.schemas.embedding import EmbeddedChunk
 
-from app.core.config import (
-    VECTOR_DB_PATH,
-    COLLECTION_NAME,
-)
+from app.core.config import settings
 
 
 class VectorStoreService:
@@ -12,11 +9,11 @@ class VectorStoreService:
     def __init__(self):
 
         self.client = chromadb.PersistentClient(
-            path=VECTOR_DB_PATH
+            path=settings.VECTOR_DB_PATH
         )
 
         self.collection = self.client.get_or_create_collection(
-            COLLECTION_NAME
+            settings.COLLECTION_NAME
         )
 
     def add(self, embedded_chunks: list[EmbeddedChunk]):
@@ -38,10 +35,10 @@ class VectorStoreService:
 
     def clear(self):
 
-        self.client.delete_collection(COLLECTION_NAME)
+        self.client.delete_collection(settings.COLLECTION_NAME)
 
         self.collection = self.client.get_or_create_collection(
-            COLLECTION_NAME
+            settings.COLLECTION_NAME
         )
 
 
