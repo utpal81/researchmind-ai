@@ -11,13 +11,18 @@ class ResearchAssistantService:
 
     def ingest_document(self, file):
 
-        document = document_service.create_document(file)
+        print(">>> ingest_document() called <<<")
+
+        document = document_service.ingest_document(file)
 
         chunks = chunk_service.chunk(document)
 
         embedded_chunks = embedding_service.embed(chunks)
 
         vector_store_service.add(embedded_chunks)
+
+        print("Collection count:", vector_store_service.collection.count())
+
 
         return document
 

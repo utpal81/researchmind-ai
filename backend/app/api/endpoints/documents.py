@@ -3,7 +3,7 @@ from app.exceptions.document_exceptions import InvalidDocumentTypeError
 from app.services.document_service import document_service
 from app.schemas.document import Document
 from app.services.research_assistant_service import research_assistant_service
-from app.schemas.api.response import UploadResponse
+from app.services.vector_store_service import vector_store_service
 
 router = APIRouter(
     prefix="/documents",
@@ -11,7 +11,7 @@ router = APIRouter(
 )
 
 
-@router.post("/upload", response_model=UploadResponse)
+@router.post("/upload", response_model=Document)
 def upload_document(file: UploadFile = File(...)):
     try:
         return research_assistant_service.ingest_document(file)
@@ -20,4 +20,11 @@ def upload_document(file: UploadFile = File(...)):
             status_code=400,
             detail=str(e)
     )
+
+@router.delete("/clear")
+def clear_documents():
+
+    vector_store_service.clear()
+
+    return {"message": "Vector database cleared."}
 
