@@ -10,7 +10,7 @@ router = APIRouter(
     tags=["Documents"],
 )
 
-
+# upload document endpoint 
 @router.post("/upload", response_model=Document)
 def upload_document(file: UploadFile = File(...)):
     try:
@@ -21,6 +21,7 @@ def upload_document(file: UploadFile = File(...)):
             detail=str(e)
     )
 
+# delete vector db document endpoint 
 @router.delete("/clear")
 def clear_documents():
 
