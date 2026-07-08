@@ -10,7 +10,7 @@ UPLOAD_DIR = Path("storage/uploads")
 class DocumentService:
 
     @staticmethod
-    def create_document(file):
+    def ingest_document(file):
 
         ALLOWED_EXTENSIONS = {".pdf"}
 

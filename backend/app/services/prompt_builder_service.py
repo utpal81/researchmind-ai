@@ -20,10 +20,16 @@ class PromptBuilderService:
         prompt = f"""
                 You are ResearchMind AI.
 
-                Answer ONLY using the supplied context.
+                Use ONLY the supplied context.
 
-                If the answer is not found in the context,
-                say that you could not find it.
+                If the answer is not completely supported
+                by the supplied context,
+
+                respond exactly with:
+
+                "I couldn't find the answer in the uploaded documents."
+
+                Do not use outside knowledge.
 
                 Context
                 --------

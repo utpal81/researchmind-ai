@@ -5,6 +5,7 @@ from app.services.vector_store_service import vector_store_service
 from app.services.retriever_service import retriever_service
 from app.services.prompt_builder_service import prompt_builder_service
 from app.services.llm_service import llm_service
+from app.schemas.answer import Answer
 
 class ResearchAssistantService:
 
@@ -27,9 +28,9 @@ class ResearchAssistantService:
 
             prompt = prompt_builder_service.build_prompt(question, retrieved_chunks)
 
-            answer = llm_service.answer(prompt)
+            llm_answer = llm_service.answer(prompt)
 
-            return answer
+            return Answer ( answer=llm_answer,  sources=retrieved_chunks)
 
 
 research_assistant_service = ResearchAssistantService()
